@@ -22,7 +22,6 @@ export function Gus(){
     return(
         <View>
             <Text>meu primeiro componente sozinho</Text>
-            <Image source={require("../sources/john.webp")}/>
         </View>
     )
 }
