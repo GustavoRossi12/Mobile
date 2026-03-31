@@ -1,24 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image} from 'react-native';
-import { Profile } from './components/profile';
-import { Person } from './components/profile';
-import { Gus } from './components/profile';
-import  Images  from './components/image';
-import Login from "./components/login";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button, Card } from 'react-native-paper';
+import { drivers } from './data/drivers';
 
 export default function App() {
+  const [piloto, setPiloto] = useState(0);
+
+  const motoristas = drivers[piloto];
+
+  function proximoPiloto() {
+    setPiloto((piloto + 1) % drivers.length);
+  }
+
   return (
     <View style={styles.container}>
-      
-      <Login />
-      {/*<Text style={styles.txt_title}>john egbert</Text>
-      <Images></Images>
-      <Images></Images>
-      <Images></Images>
-       <Profile />
-      <Person />
-      <Gus />
-      <StatusBar style="auto" /> */}
+      <Card>
+        <Card.Cover source={{ uri: motoristas.image }} />
+
+        <Card.Content style={styles.card}>
+          <Text style={styles.txt}>{motoristas.name}</Text>
+          <Text>{motoristas.description}</Text>
+          <Text>Equipe: {motoristas.team}</Text>
+          <Text>País: {motoristas.country}</Text>
+          <Text>Estrelas: {'★'.repeat(motoristas.stars)}</Text>
+
+          <Button
+            mode="contained"
+            onPress={proximoPiloto}
+            style={styles.button}
+          >
+            Próximo Piloto
+          </Button>
+        </Card.Content>
+      </Card>
     </View>
   );
 }
@@ -26,14 +40,24 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8af092ff',
+    backgroundColor: '#e26f6f',
     alignItems: 'center',
-    justifyContent: 'space_around',
+    justifyContent: 'center',
   },
 
-  txt_title: {
-    fontSize: 50,
+  txt: {
+    fontSize: 30,
+    color: '#000',
     fontWeight: 'bold',
-    color: '#ffff',
-  }
+  },
+
+  card: {
+    width: 400,
+    marginBottom: 20,
+  },
+
+  button: {
+    marginTop: 10,
+    backgroundColor: '#000',
+  },
 });
