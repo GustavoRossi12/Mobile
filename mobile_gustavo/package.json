@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "coi-serviceworker": "^0.1.7",
     "expo": "~55.0.4",
     "expo-status-bar": "~55.0.4",
     "react": "19.2.0",

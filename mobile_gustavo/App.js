@@ -1,63 +1,40 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button, Card } from 'react-native-paper';
-import { drivers } from './data/drivers';
 
-export default function App() {
-  const [piloto, setPiloto] = useState(0);
+import { NavigationContainer } from "@react-navigation/native"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
-  const motoristas = drivers[piloto];
+import Entypo from '@expo/vector-icons/Entypo';
 
-  function proximoPiloto() {
-    setPiloto((piloto + 1) % drivers.length);
-  }
+import Login from './Screens/Login';
+import Home from './Screens/Home';
+import Images from "./components/Image";
+import ExemploAsyncStorage from "./Screens/ExemploAsyncStorage";
+import Exemplo1AsyncStorage from "./Screens/Exemplo1AsyncStorage";
+import Produtos from "./Screens/Produtos";
 
-  return (
-    <View style={styles.container}>
-      <Card>
-        <Card.Cover source={{ uri: motoristas.image }} />
-
-        <Card.Content style={styles.card}>
-          <Text style={styles.txt}>{motoristas.name}</Text>
-          <Text>{motoristas.description}</Text>
-          <Text>Equipe: {motoristas.team}</Text>
-          <Text>País: {motoristas.country}</Text>
-          <Text>Estrelas: {'★'.repeat(motoristas.stars)}</Text>
-
-          <Button
-            mode="contained"
-            onPress={proximoPiloto}
-            style={styles.button}
-          >
-            Próximo Piloto
-          </Button>
-        </Card.Content>
-      </Card>
-    </View>
-  );
+function TabNavigate(){
+  const Tab = createBottomTabNavigator();
+  return(
+    <Tab.Navigator>
+      <Tab.Screen  name="Home" component={Home}options={{
+                tabBarIcon: () => (
+                  <Entypo name="login" size={24} color="#c750b9ff" />
+                )
+              }}/>
+      <Tab.Screen  name="Imagens" component={Images}/>
+      <Tab.Screen name="Async2" component={Exemplo1AsyncStorage}/>
+      <Tab.Screen name="Produtos" component={Produtos}/>
+    </Tab.Navigator>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#e26f6f',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  txt: {
-    fontSize: 30,
-    color: '#000',
-    fontWeight: 'bold',
-  },
-
-  card: {
-    width: 400,
-    marginBottom: 20,
-  },
-
-  button: {
-    marginTop: 10,
-    backgroundColor: '#000',
-  },
-});
+export default function App(){
+    const Stack = createStackNavigator();
+  return(
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Home" component={TabNavigate}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
